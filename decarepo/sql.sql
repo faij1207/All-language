@@ -11,22 +11,22 @@
 # view multiple author's days active
 #---------------------------------------
 */
-WITH dateDiff('day', toDateTime(earliest_seen), toDateTime(last_seen)) AS days_active
-SELECT
-    days_active,
-    actor_login,
-    last_seen
-FROM
-(
+
+WITH contributor_activity AS (
     SELECT
         MIN(created_at) AS earliest_seen,
         MAX(created_at) AS last_seen,
-        days_active,
         actor_login
     FROM github_events
     WHERE repo_name = 'bitcoin/bitcoin'
     GROUP BY actor_login
-    ORDER BY days_active DESC
 )
-WHERE days_active > 0
-LIMIT 100
+SELECT
+    actor_login,
+    earliest_seen,
+    last_seen,
+    dateDiff('day', toDateTime(earliest_seen), toDateTime(last_seen)) AS days_active
+FROM contributor_activity
+WHERE dateDiff('day', toDateTime(earliest_seen), toDateTime(last_seen)) > 0
+ORDER BY days_active DESC
+LIMIT 100;

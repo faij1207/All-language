@@ -36,8 +36,10 @@ uint value;
         //this is the contract balance, not the user account balance
         return address(this).balance;
     }
+    
     //How to output a user's (address) balance?
-    function getAccountBalance() public view returns(uint){
-    //code here
+    function getAccountBalance(address user) public view returns(uint){
+        //return the balance of the provided address
+        return user.balance;
     }
 }

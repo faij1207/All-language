@@ -42,4 +42,11 @@ fn main() {
             break;
         }
     }
+
+    // Additional functionality: Sorting a list of numbers
+    let mut numbers = vec![5, 3, 8, 6, 2, 7, 4, 1, 10, 9];
+    println!("Original list: {:?}", numbers);
+
+    numbers.sort();
+    println!("Sorted list: {:?}", numbers);
 }
